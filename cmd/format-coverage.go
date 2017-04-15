@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/formatters"
@@ -67,7 +68,12 @@ var formatCoverageCmd = &cobra.Command{
 	},
 }
 
+func timeTrack(start time.Time, name string) {
+	fmt.Printf("%s took %s\n", name, time.Since(start))
+}
+
 func (f CoverageFormatter) Save() error {
+	defer timeTrack(time.Now(), "format")
 	err := f.In.Parse()
 	if err != nil {
 		return errors.WithStack(err)

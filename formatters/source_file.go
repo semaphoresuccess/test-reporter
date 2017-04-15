@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/markbates/pop/nulls"
@@ -66,7 +67,8 @@ func (sf *SourceFile) CalcLineCounts() {
 	sf.CoveredPercent = lc.CoveredPercent()
 }
 
-func NewSourceFile(name string) (SourceFile, error) {
+
+func NewSourceFile(name string, blobTimeAcc *time.Duration) (SourceFile, error) {
 	if pwd, err := os.Getwd(); err == nil {
 		pwd := fmt.Sprintf("%s%s", pwd, string(os.PathSeparator))
 		name = strings.TrimPrefix(name, pwd)
@@ -74,7 +76,7 @@ func NewSourceFile(name string) (SourceFile, error) {
 
 	sf := SourceFile{Name: name}
 	var err error
-	sf.BlobID, err = env.GitBlob(name)
+	sf.BlobID, err = env.GitBlob(name, blobTimeAcc)
 	return sf, err
 }
 

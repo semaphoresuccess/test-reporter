@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -86,7 +87,12 @@ func GitSHA(path string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-var GitBlob = func(path string) (string, error) {
+func timeTrack(start time.Time, acc *time.Duration, name string) {
+	*acc = *acc + time.Since(start)
+}
+
+var GitBlob = func(path string, blobTimeAcc *time.Duration) (string, error) {
+	defer timeTrack(time.Now(), blobTimeAcc, "new source file")
 	sha, err := GitSHA(path)
 	if err != nil {
 		return "", errors.WithStack(err)

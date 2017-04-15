@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strings"
 	"time"
+	"fmt"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/formatters"
@@ -55,8 +56,9 @@ func (f *Formatter) Parse() error {
 			Timestamp:   v.Timestamp.Time(),
 			SourceFiles: make([]formatters.SourceFile, 0, len(v.Coverage)),
 		}
+		var blobTimeAcc = time.Duration(0)
 		for n, ls := range v.Coverage {
-			fe, err := formatters.NewSourceFile(n)
+			fe, err := formatters.NewSourceFile(n, &blobTimeAcc)
 			if err != nil {
 				return errors.WithStack(err)
 			}
@@ -64,6 +66,7 @@ func (f *Formatter) Parse() error {
 			fe.CalcLineCounts()
 			tt.SourceFiles = append(tt.SourceFiles, fe)
 		}
+  	fmt.Printf("%s took %s\n", "git blob", blobTimeAcc)
 		sort.Slice(tt.SourceFiles, func(a, b int) bool {
 			return tt.SourceFiles[a].Name < tt.SourceFiles[b].Name
 		})

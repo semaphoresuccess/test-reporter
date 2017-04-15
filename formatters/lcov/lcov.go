@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/formatters"
@@ -44,7 +45,8 @@ func (f *Formatter) Parse() error {
 	for _, line := range bytes.Split(b, []byte("\n")) {
 		if bytes.HasPrefix(line, []byte("SF:")) {
 			name := string(bytes.TrimSpace(bytes.TrimPrefix(line, []byte("SF:"))))
-			sf, err = formatters.NewSourceFile(name)
+			var blobTimeAcc = time.Duration(0)
+			sf, err = formatters.NewSourceFile(name, &blobTimeAcc)
 			if err != nil {
 				return errors.WithStack(err)
 			}
