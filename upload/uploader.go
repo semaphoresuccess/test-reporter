@@ -115,7 +115,7 @@ func (u Uploader) SendBatches(rep *TestReport, url string) error {
 
 func (u Uploader) doRequest(in io.Reader, url string) (*http.Response, error) {
 	c := http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: 60 * time.Second,
 	}
 
 	req, err := u.newRequest(in, url)
