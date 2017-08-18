@@ -3,7 +3,7 @@
     "branch": "sum",
     "build_identifier": "",
     "build_url": "",
-    "commit_sha": "6a225404f7205d9738b072e04f4a0ac809a0c1a4",
+    "commit_sha": "9fd7f50ef32f8832df9cf4611860db4e4a2ec1e5",
     "committed_at": 1489695670,
     "name": ""
   },
@@ -17,7 +17,7 @@
   },
   "git": {
     "branch": "sum",
-    "head": "6a225404f7205d9738b072e04f4a0ac809a0c1a4",
+    "head": "9fd7f50ef32f8832df9cf4611860db4e4a2ec1e5",
     "committed_at": 1489695670
   },
   "covered_percent": 88.92405063291139,
